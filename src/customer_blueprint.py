@@ -44,3 +44,13 @@ def get_customer_by_afm(afm):
     except Exception as e:
         print(e)
         return Response(json.dumps({"msg": str(e)}), status=400)
+
+@customer.route("/afm/<string:afm>", methods=["PATCH"])
+def update_customer(afm):
+    try:
+        data = request.get_json()
+        Customer.objects(afm=afm).update_one(**data)
+        return Response(json.dumps({"msg": "Customer updated"}), status=200)
+    except Exception as e:
+        print(e)
+        return Response(json.dumps({"msg": str(e)}), status=400)
